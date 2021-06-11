@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output, OnInit } from "@angular/core";
+import { RetrievalService } from "../retrieval.service";
 
 @Component({
   selector: "app-ammo-module",
   templateUrl: "./ammo-module.component.html",
   styleUrls: ["./ammo-module.component.scss"],
 })
-export class AmmoModuleComponent {
+export class AmmoModuleComponent implements OnInit {
   @Input() id = "";
   @Input() name = "";
   @Output() deleted = new EventEmitter<string>();
@@ -13,7 +14,11 @@ export class AmmoModuleComponent {
   ammoCount = 0;
   firedCount = 0;
 
-  constructor() {}
+  constructor(private retrievalService: RetrievalService) {}
+
+  ngOnInit() {
+    this.retrievalService.subscribe(this.id, this);
+  }
 
   addAmmo() {
     this.ammoCount += 1;
@@ -29,10 +34,12 @@ export class AmmoModuleComponent {
   }
 
   deleteThis() {
+    this.retrievalService.unsubscribe(this.id);
     this.deleted.emit(this.id);
   }
 
   retrieveAmmo() {
     this.ammoCount += this.firedCount / 2;
+    this.firedCount = 0;
   }
 }
