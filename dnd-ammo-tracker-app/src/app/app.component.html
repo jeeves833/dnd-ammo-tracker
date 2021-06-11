@@ -1,3 +1,14 @@
-<h1>
-  Ammunition Tracker
-</h1>
+<h1>Ammunition Tracker</h1>
+
+<div>
+  <button (click)="addNewAmmoType()">Add New Ammo Type</button>
+</div>
+
+<div *ngFor="let id of ammoIds; let isLast=last">
+  <app-ammo-module (deleted)="deleteModule($event)" [id]="id"></app-ammo-module>
+  <hr *ngIf="!isLast" />
+</div>
+
+<div id="spentAmmoButton">
+  <button>Retrieve Spent Ammo</button>
+</div>
