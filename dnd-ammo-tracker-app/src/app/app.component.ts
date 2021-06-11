@@ -11,16 +11,16 @@ import { RetrievalService } from "./retrieval.service";
 export class AppComponent {
   title = "dnd-ammo-tracker-app";
 
-  ammoIds: Set<string> = new Set();
+  ammoIdsMap: Map<string, string> = new Map();
 
   constructor(private retrievalService: RetrievalService) {}
 
-  addNewAmmoType() {
-    this.ammoIds.add(uuidv4());
+  addNewAmmoType(name: string) {
+    this.ammoIdsMap.set(uuidv4(), name);
   }
 
   deleteModule(id: string) {
-    this.ammoIds.delete(id);
+    this.ammoIdsMap.delete(id);
   }
 
   initiateRetrieval() {

@@ -39,7 +39,7 @@ export class AmmoModuleComponent implements OnInit {
   }
 
   retrieveAmmo() {
-    this.ammoCount += this.firedCount / 2;
+    this.ammoCount += Math.floor(this.firedCount / 2);
     this.firedCount = 0;
   }
 }
