@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AmmoModuleComponent } from './ammo-module/ammo-module.component';
@@ -10,7 +11,7 @@ import { AmmoModuleComponent } from './ammo-module/ammo-module.component';
     AmmoModuleComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule, FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

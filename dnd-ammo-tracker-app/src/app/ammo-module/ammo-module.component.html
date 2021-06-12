@@ -1,10 +1,21 @@
 <div>
-  <p>{{name.length == 0 ? "Ammo" : name}} Count: {{ammoCount}}</p>
-  <p>Spent Ammo: {{firedCount}}</p>
-  <button (click)="addAmmo()">Add</button>
-  <button (click)="removeAmmo()" [disabled]="ammoCount==0">Remove</button>
-  <button (click)="fire()" id="fireButton" [disabled]="ammoCount==0">
-    Fire!
-  </button>
-  <button (click)="deleteThis()" id="deleteButton">Delete</button>
+  <div>
+    <p>{{name.length == 0 ? "Ammo" : name}} Count: {{ammoCount}}</p>
+    <p>Spent Ammo: {{firedCount}}</p>
+    <button (click)="addAmmo()">Add</button>
+    <button (click)="removeAmmo()" [disabled]="ammoCount==0">Remove</button>
+    <button (click)="fire()" id="fireButton" [disabled]="ammoCount==0">
+      Fire!
+    </button>
+    <button (click)="deleteThis()" id="deleteButton">Delete</button>
+  </div>
+  <select
+    [(ngModel)]="selectedRetrievalMode"
+    name="retrievalMode"
+    id="retrievalMode"
+  >
+    <option *ngFor="let option of retrievalOptions; let i=index" [value]="i">
+      {{option}}
+    </option>
+  </select>
 </div>

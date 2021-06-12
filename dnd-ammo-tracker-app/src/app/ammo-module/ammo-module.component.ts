@@ -13,6 +13,13 @@ export class AmmoModuleComponent implements OnInit {
 
   ammoCount = 0;
   firedCount = 0;
+  selectedRetrievalMode = 0;
+
+  retrievalOptions = [
+    "Retrieve All",
+    "Retrieve Half Rounded Down",
+    "Retrieve Half Rounded Up",
+  ];
 
   constructor(private retrievalService: RetrievalService) {}
 
@@ -39,7 +46,13 @@ export class AmmoModuleComponent implements OnInit {
   }
 
   retrieveAmmo() {
-    this.ammoCount += Math.floor(this.firedCount / 2);
+    if (this.selectedRetrievalMode == 0) {
+      this.ammoCount += this.firedCount;
+    } else if (this.selectedRetrievalMode == 1) {
+      this.ammoCount += Math.floor(this.firedCount / 2);
+    } else if (this.selectedRetrievalMode == 2) {
+      this.ammoCount += Math.ceil(this.firedCount / 2);
+    }
     this.firedCount = 0;
   }
 }
