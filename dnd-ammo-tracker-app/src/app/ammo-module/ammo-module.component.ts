@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnInit } from "@angular/core";
 import { RetrievalService } from "../retrieval.service";
+import { AmmoService } from "../ammo.service";
 
 @Component({
   selector: "app-ammo-module",
@@ -11,9 +12,11 @@ export class AmmoModuleComponent implements OnInit {
   @Input() name = "";
   @Output() deleted = new EventEmitter<string>();
 
-  ammoCount = 0;
-  firedCount = 0;
-  selectedRetrievalMode = 0;
+  state: AmmoModuleState = {
+    ammoCount: 0,
+    firedCount: 0,
+    selectedRetrievalMode: 0,
+  };
 
   retrievalOptions = [
     "Retrieve All",
@@ -21,23 +24,27 @@ export class AmmoModuleComponent implements OnInit {
     "Retrieve Half Rounded Up",
   ];
 
-  constructor(private retrievalService: RetrievalService) {}
+  constructor(
+    private retrievalService: RetrievalService,
+    private ammoService: AmmoService
+  ) {}
 
   ngOnInit() {
     this.retrievalService.subscribe(this.id, this);
+    this.state = this.ammoService.ammoModuleStates.get(this.id)!;
   }
 
   addAmmo() {
-    this.ammoCount += 1;
+    this.state.ammoCount += 1;
   }
 
   removeAmmo() {
-    this.ammoCount -= 1;
+    this.state.ammoCount -= 1;
   }
 
   fire() {
-    this.ammoCount -= 1;
-    this.firedCount += 1;
+    this.state.ammoCount -= 1;
+    this.state.firedCount += 1;
   }
 
   deleteThis() {
@@ -46,13 +53,19 @@ export class AmmoModuleComponent implements OnInit {
   }
 
   retrieveAmmo() {
-    if (this.selectedRetrievalMode == 0) {
-      this.ammoCount += this.firedCount;
-    } else if (this.selectedRetrievalMode == 1) {
-      this.ammoCount += Math.floor(this.firedCount / 2);
-    } else if (this.selectedRetrievalMode == 2) {
-      this.ammoCount += Math.ceil(this.firedCount / 2);
+    if (this.state.selectedRetrievalMode == 0) {
+      this.state.ammoCount += this.state.firedCount;
+    } else if (this.state.selectedRetrievalMode == 1) {
+      this.state.ammoCount += Math.floor(this.state.firedCount / 2);
+    } else if (this.state.selectedRetrievalMode == 2) {
+      this.state.ammoCount += Math.ceil(this.state.firedCount / 2);
     }
-    this.firedCount = 0;
+    this.state.firedCount = 0;
   }
+}
+
+export interface AmmoModuleState {
+  ammoCount: number;
+  firedCount: number;
+  selectedRetrievalMode: number;
 }

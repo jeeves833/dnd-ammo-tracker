@@ -17,7 +17,6 @@ export class RetrievalService {
 
   subscribe(id: string, ammoModule: AmmoModuleComponent) {
     this.idRetrievalMap.set(id, ammoModule);
-    console.log(this.idRetrievalMap.keys());
   }
 
   unsubscribe(id: string) {
